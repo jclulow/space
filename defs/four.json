@@ -1,5 +1,9 @@
 [
   {
+    "settings": true,
+    "tracelife": 3
+  },
+  {
     "name": "M", "colour": 226,
     "mass": 7.347e+22,
     "x": 384400000.0,
