@@ -160,6 +160,9 @@ move_things()
 	for (var i = 0; i < OBJECTS.length; i++) {
 		var o = OBJECTS[i];
 
+		if (o.fixed)
+			continue;
+
 		var Fx = 0;
 		var Fy = 0;
 
