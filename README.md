@@ -1,4 +1,5 @@
 # SPAAAAAACE!
 
-![space screenshot](http://us-east.manta.joyent.com/jmc/public/images/space.png)
+![space screenshot](./space.png)
 
+Now with 100% more Rust!
