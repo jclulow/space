@@ -1,4 +1,4 @@
-use libc::{ioctl, ___errno};
+use libc::ioctl;
 use libc::{tcgetattr, tcsetattr};
 use libc::{winsize, termios};
 use libc::TIOCGWINSZ;
@@ -18,6 +18,17 @@ pub struct WinSize {
     pub cols: u16,
 }
 
+fn errno() -> i32 {
+    #[cfg(any(target_os = "solaris", target_os = "illumos"))]
+    {
+        unsafe { *libc::___errno() }
+    }
+    #[cfg(any(target_os = "linux"))]
+    {
+        unsafe { *libc::__errno_location() }
+    }
+}
+
 impl RawMode {
     pub fn enable() -> std::io::Result<RawMode> {
         let orig = Box::into_raw(
@@ -25,7 +36,7 @@ impl RawMode {
 
         let (r, e) = unsafe {
             let r = tcgetattr(1, orig);
-            let e = *___errno();
+            let e = errno();
             (r, e)
         };
 
@@ -51,7 +62,7 @@ impl RawMode {
 
         let (r, e) = unsafe {
             let r = tcsetattr(1, TCSADRAIN, change);
-            let e = *___errno();
+            let e = errno();
             (r, e)
         };
 
@@ -72,7 +83,7 @@ impl RawMode {
 
         let (r, e) = unsafe {
             let r = ioctl(1, TIOCGWINSZ, ws);
-            let e = *___errno();
+            let e = errno();
             (r, e)
         };
 
