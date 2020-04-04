@@ -287,7 +287,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
     };
 
     let mut then = SystemTime::now();
-    for _ in 0..10000 {
+    for _ in 0..1000 {
         for _ in 0..20_000 {
             move_things(&mut space);
         }
@@ -298,7 +298,7 @@ fn main() -> Result<(), Box<dyn std::error::Error>> {
         space.term.flush();
         then = now;
 
-        std::thread::sleep(std::time::Duration::from_millis(10));
+        std::thread::sleep(std::time::Duration::from_millis(40));
     }
 
     space.term.soft_reset();
